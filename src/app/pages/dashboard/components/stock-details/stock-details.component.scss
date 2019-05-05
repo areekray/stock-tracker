@@ -1,0 +1,56 @@
+#stock-details {
+    display: flex;
+    flex-direction: column;
+    padding: 20px 20px 20px 10px;    
+    min-height: 100%;
+    & > div {
+        & > .card {
+            margin-bottom: 10px;
+            &.graph-card {
+                height: auto;
+                padding-top: 15px;
+                padding-bottom: 15px;
+                & > .primary-text, & > .secondary-text {
+                    text-align: center;
+                    margin-bottom: 3px;
+                }
+                & > .secondary-text {
+                    margin-bottom: 15px;
+                }
+            }
+        }
+        
+    }
+    & > .no-data {
+        height: 450px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;  
+        & > div {
+            margin-bottom: 5px;
+            &:first-child {
+                margin-bottom: 15px;
+                & > .material-icons {
+                    color: #56677b;
+                }
+            }
+            &:nth-child(2) {
+                font-weight: 600;
+                margin-bottom: 7px;
+            } 
+            &:last-child {
+                & > span {
+                    display: inline-block;
+                    height: 25px;
+                    width: 25px;    
+                    margin-bottom: -7px;
+                    background: url('../../../../../assets/images/sheild.PNG');
+                    background-position: center;
+                    background-size: contain;
+                    background-repeat: no-repeat;
+                }
+            }
+        }    
+    }
+}

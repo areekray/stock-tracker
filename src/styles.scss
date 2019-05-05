@@ -1,1 +1,74 @@
 /* You can add global styles to this file, and also import other style files */
+body {
+    margin: 0;
+    * {
+        font-family: 'Roboto', sans-serif;
+    }
+
+    /* width */
+    ::-webkit-scrollbar {
+        width: 5px;
+    }
+
+    /* Track */
+    ::-webkit-scrollbar-track {
+        background: transparent;
+    }
+
+    /* Handle */
+    ::-webkit-scrollbar-thumb {
+        background: #c1c1c1;
+        cursor: pointer;
+    }
+
+    /* Handle on hover */
+    ::-webkit-scrollbar-thumb:hover {
+        background: #9c9c9c;
+    }
+
+    @mixin text() {
+        letter-spacing: .8px;
+        font-weight: 500;
+    }
+
+    .card {
+        box-shadow: 0 0 4px #d6d7d8;
+        padding: 0 15px 0 15px;
+        background: #fcfcfd;
+        border: 1px solid #00000020;
+        border-radius: .25rem;        
+    }
+
+    .primary-text {
+        @include text();
+        font-size: 13px;
+        color: #56677b;
+    }
+
+    .secondary-text {
+        @include text();
+        font-size: 11px;
+        color: #8095aa;
+    }
+
+    .loader {
+        border: 4px solid #f3f3f3;
+        border-radius: 50%;
+        border-top: 4px solid #56677b;
+        width: 20px;
+        height: 20px;
+        -webkit-animation: spin 0.5s linear infinite;
+        animation: spin 0.5s linear infinite;
+      }
+      
+      @-webkit-keyframes spin {
+        0% { -webkit-transform: rotate(0deg); }
+        100% { -webkit-transform: rotate(360deg); }
+      }
+      
+      @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+      }
+        
+}

@@ -1,0 +1,29 @@
+<div id="stock-list">
+  <div class="card stock-card" 
+  *ngFor="let stock of stocksList" 
+  [ngClass]="{'selected': findIndexOf(selectedStocks, stock) >= 0}"
+  (click)="selectStock(stock)">
+    <div class="icon">
+      <div><div>{{ stock?.name?.substr(0,1) | uppercase }}</div></div>
+    </div>
+    <div class="name">
+        <div class="primary-text">{{ stock?.name | titlecase }}</div>            
+        <div class="secondary-text">{{ stock?.timeStamp | timeInterval : currentTime}}</div>
+    </div>
+    <div class="price">
+        <div>
+          <div class="primary-text">{{ stock?.price | currency:'INR':'symbol':'0.2-2' }}</div>
+          <div class="secondary-text" 
+            [ngClass]="{'up': stock?.difference > 0, 'down': stock?.difference < 0}">
+              {{ stock?.difference == 0 ? 'Consistent' : stock?.difference | currency:'INR':'symbol':'0.2-2' }}
+          </div>
+        </div>
+        <div>
+          <i class="material-icons"
+            [ngClass]="{'up': stock?.difference > 0, 'down': stock?.difference < 0}">
+            {{ stock?.difference > 0 ? 'arrow_upward' : stock?.difference < 0 ? 'arrow_downward' : '' }}
+          </i>
+        </div>
+    </div>
+  </div>
+</div>

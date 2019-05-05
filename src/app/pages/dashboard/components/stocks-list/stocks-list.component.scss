@@ -1,0 +1,88 @@
+#stock-list {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    & > .stock-card {
+        width: calc(100% - 20px);
+        margin-bottom: 10px;    
+        height: 55px;
+        padding-right: 8px;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        align-items: center;        
+        &.selected {
+            border-color: #56677b;
+        }
+        .primary-text {
+            margin-bottom: 3px;
+        }
+        &:last-child {    
+            margin-bottom: 0;    
+        }
+        cursor: pointer;
+        & > div {
+            display: flex;
+            &.icon {
+                justify-content: center;
+                align-items: center;
+                height: 40px;
+                width: 40px;
+                margin-right: 15px;
+                box-shadow: 0 0 4px #c1c1c1;
+                border-radius: 50%;
+                overflow: hidden;
+                background: #ffffff;
+                & > div {
+                    height: 35px;
+                    width: 35px;                        
+                    box-shadow: 0 0 4px #c1c1c1;
+                    border-radius: 50%;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    background: #dae4ef;
+                    color: #56677b;
+                    font-weight: 600;
+                }
+            }
+            &.name {
+                flex: 1;
+                flex-direction: column;
+                align-items: flex-start;
+               
+            }
+            &.price {
+                width: 250px;
+                flex-direction: row;
+                align-items: flex-end;
+                .up {
+                    color: #34a84f;
+                }
+                .down {
+                    color: #d63b3b;
+                }
+                & > div {
+                    &:first-child {
+                        flex: 1;
+                        text-align: right;
+                    }
+                    &:last-child {
+                        width: 20px;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        margin-bottom: 5px;
+                        margin-left: 5px;
+                        & > i {
+                            font-size: 18px;
+                            font-weight: 500;
+                            
+                        }                        
+                    }
+                }
+            }
+            
+        }
+    }
+}

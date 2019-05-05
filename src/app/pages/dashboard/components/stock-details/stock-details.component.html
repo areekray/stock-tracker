@@ -1,0 +1,22 @@
+<div id="stock-details">
+  <div class="no-data" *ngIf="stockList?.length === 0">
+      <div><i class="material-icons">content_paste</i></div>
+      <div class="primary-text">STOCK DATA HISTORY</div>
+      <div class="primary-text">You can visualize change in price over the time</div>
+      <div class="secondary-text">Select on stock card to view its history</div>
+  </div>
+  <div *ngIf="stockList?.length > 0">
+      <div class="card graph-card" >
+          <div class="primary-text">{{ stockList[0].name | titlecase }}</div>
+          <div class="secondary-text">Stock Name</div>
+          <div style="display: block;" *ngIf="lineChartLabels">
+              <canvas baseChart
+                          [datasets]="lineChartData"
+                          [labels]="lineChartLabels"
+                          [options]="lineChartOptions"
+                          [colors]="lineChartColors"
+                          [chartType]="lineChartType"></canvas>
+              </div>
+      </div>
+  </div>
+</div>

@@ -1,0 +1,77 @@
+#stock-dashboard {  
+    & > .nav-bar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 45px;
+        width: 100%;
+        z-index: 1000;
+        background: #56677b;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        color: #fff;
+        font-size: 18px;
+        font-weight: 500;
+        & > .logo {
+            height: 28px;
+            width: 134px;
+            margin-left: 20px;
+            background: url('../../../../../assets/images/m-net.svg');
+            background-position: center;
+            background-size: contain;
+            background-repeat: no-repeat;
+        }
+        & > .primary-text {
+            margin-left: 20px;
+            color: #f0f4f8;
+        }
+    }
+    & > .dashboard {    
+        height: calc(100vh - 45px);
+        margin-top: 45px;        
+        overflow: hidden;
+        display: flex;
+        flex-wrap: nowrap;
+        background: #f0f4f8;
+        & > div {
+            width: 50%;
+            overflow-x: hidden;
+            overflow-y: scroll;
+        }
+    }  
+    .dashboard-loading, .load-unsafe-scripts {
+        height: calc(100vh - 45px);
+        margin-top: 45px;     
+        background: #f0f4f8;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;  
+        & > div {
+            margin-bottom: 5px;
+            &:first-child {
+                margin-bottom: 15px;
+                & > .material-icons {
+                    color: #d63b3b;
+                }
+            }
+            &:nth-child(2) {
+                font-weight: 600;
+                margin-bottom: 7px;
+            } 
+            &:last-child {
+                & > span {
+                    display: inline-block;
+                    height: 25px;
+                    width: 25px;    
+                    margin-bottom: -7px;
+                    background: url('../../../../../assets/images/sheild.PNG');
+                    background-position: center;
+                    background-size: contain;
+                    background-repeat: no-repeat;
+                }
+            }
+        }      
+    }  
+}
