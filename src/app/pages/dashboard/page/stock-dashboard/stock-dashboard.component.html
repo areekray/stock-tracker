@@ -3,7 +3,7 @@
     <div class="logo"></div>
     <div class="primary-text">(LIVE) Stocks App</div>
   </div>
-  <div class="dashboard" *ngIf="appService?.stocksList && appService?.stocksList.length > 0 && !appService?.loadUnsafeScript">
+  <div class="dashboard" *ngIf="appService?.stocksList && appService?.stocksList.length > 0 && !appService?.loadUnsafeScript && !error">
       <div>
           <app-stocks-list [stocksList]="appService?.stocksList" (selectedStocksEvent)="refreshSelectedStocks($event)"></app-stocks-list>
       </div>
@@ -11,7 +11,7 @@
           <app-stock-details [stockList]="selectedStocks"></app-stock-details>
       </div>
   </div>
-  <div class="dashboard-loading" *ngIf="!appService?.loadUnsafeScript && (!appService?.stocksList || appService?.stocksList.length == 0)">
+  <div class="dashboard-loading" *ngIf="!appService?.loadUnsafeScript && !error && (!appService?.stocksList || appService?.stocksList.length == 0)">
       <div class="loader"></div>
       <div class="primary-text">WELCOME TO LIVE STOCKS APP</div>
       <div class="primary-text">Stocks will be loaded in moment</div>
@@ -22,5 +22,11 @@
       <div class="primary-text">WELCOME TO LIVE STOCKS APP</div>
       <div class="primary-text">You need to enable 'Load unsafe scripts' option in your browser</div>
       <div class="secondary-text">Click on the shield <span></span> icon in your address bar</div>
+  </div>
+  <div class="load-unsafe-scripts" *ngIf="error">
+      <div><i class="material-icons">error_outline</i></div>
+      <div class="primary-text">WELCOME TO LIVE STOCKS APP</div>
+      <div class="primary-text">Looks like the market is closed now!</div>
+      <div class="secondary-text">Please come again after some time.</div>
   </div>
 </div>
