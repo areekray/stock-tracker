@@ -10,17 +10,13 @@
         display: flex;
         flex-direction: row;
         flex-wrap: nowrap;
-        align-items: center;        
-        &.selected {
-            border-color: #56677b;
-        }
+        align-items: center;
         .primary-text {
             margin-bottom: 3px;
         }
         &:last-child {    
             margin-bottom: 0;    
         }
-        cursor: pointer;
         & > div {
             display: flex;
             &.icon {
@@ -54,35 +50,18 @@
             }
             &.price {
                 width: 250px;
-                flex-direction: row;
                 align-items: flex-end;
-                .up {
-                    color: #34a84f;
-                }
-                .down {
-                    color: #d63b3b;
-                }
-                & > div {
-                    &:first-child {
-                        flex: 1;
-                        text-align: right;
-                    }
-                    &:last-child {
-                        width: 20px;
-                        display: flex;
-                        align-items: center;
-                        justify-content: center;
-                        margin-bottom: 5px;
-                        margin-left: 5px;
-                        & > i {
-                            font-size: 18px;
-                            font-weight: 500;
-                            
-                        }                        
-                    }
-                }
             }
             
+        }
+    }
+    & > .add-stock {
+        margin-top: 10px;
+        app-add-new-stock {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
     }
 }

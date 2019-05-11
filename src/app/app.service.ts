@@ -6,97 +6,68 @@ import { IStock } from './interfaces/IStock';
   providedIn: 'root'
 })
 export class AppService {
-  
-  private url: string = 'ws://stocks.mnet.website';
-  private subject: Subject<MessageEvent>;
-  private worker: Worker;
-  private dbWorker: Worker;
-  
-  public stocksList: IStock[] = [];
-  public checkStockHistory: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
-
-  public loadUnsafeScript: boolean;
-
+  stocks: IStock[] = [];
+  stockDataPoints: number[] = [];
+  stockTimes: string[] = [];
+  interval: any;
+  trackingStock: IStock;
   constructor() { }
 
-  private create(url): Subject<MessageEvent> {
-    try{
-      let ws = new WebSocket(url);
+  resetTracking() {
+    this.stockDataPoints = [];
+    this.stockTimes = [];
+    if(this.interval) { clearInterval(this.interval); }
+  }
 
-      let observable = Observable.create((obs: Observer<MessageEvent>) => {
-        ws.onmessage = obs.next.bind(obs);
-        ws.onerror = obs.error.bind(obs);
-        ws.onclose = obs.complete.bind(obs);
-        return ws.close.bind(ws);
-      });
-      let observer = {
-        next: (data: Object) => {
-          if (ws.readyState === WebSocket.OPEN) {
-            ws.send(JSON.stringify(data));
-          }
-        }
-      };
-      return Subject.create(observer, observable);
-    }catch(err) {
-      this.loadUnsafeScript = true;
+  trackStock() {    
+    let num = Math.floor(Math.random()*90000) + 10000;
+    this.stockDataPoints.push(num);
+    this.updateStockPrice(num);
+    this.stockTimes.push(this.formatTime(new Date()));
+    this.updateStockStartDate(new Date());
+    this.interval = setInterval(() => {
+      let num = Math.floor(Math.random()*90000) + 10000;
+      this.stockDataPoints.push(num);
+      this.updateStockPrice(num);
+      this.stockTimes.push(this.formatTime(new Date()));
+    }, 15000);
+  }
+
+  formatTime(date: Date): string {
+    let hr = date.getHours();
+    let min = date.getMinutes().toString();
+    let sec = date.getSeconds().toString();
+    let ampm = 'am';
+    if( hr > 12 ) {
+        hr -= 12;
+        ampm = "pm";
     }
-    
-  }
-
-  public connect(): Subject<MessageEvent> {
-    if (!this.subject) {
-      this.subject = this.create(this.url);
+    if (parseInt(min) < 10) {
+        min = "0" + min;
     }
-    return this.subject;
+    if (parseInt(sec) < 10) {
+        sec = "0" + sec;
+    }
+    return `${hr}:${min}:${sec} ${ampm}`;
   }
 
-  public configureData(oldStockList, newStockList): Promise<IStock> {
-    return new Promise((resolve, reject) => {
-      try{
-        this.worker.onmessage = function (e: any) {
-          resolve(e.data);
-        }
-        this.worker.postMessage({ oldStockList: oldStockList, newStockList: newStockList });
-      }catch(err) {
-        reject();
+  updateStockPrice(num: number) {
+    this.stocks.some((item: IStock) => {
+      if(item.name === this.trackingStock.name) {
+        item.difference = item.price ? num - item.price : 0;
+        item.price = num;
+        return true;
       }
     });
   }
 
-  public storeData(stocksList : IStock[]): Promise<IStock> {
-    return new Promise((resolve, reject) => {
-      try{
-        this.dbWorker.onmessage = function (e: any) {
-          resolve(e.data);
-        }
-        this.dbWorker.postMessage({ action: 'store', stocks: stocksList });
-      }catch(err) {
-        reject();
+  updateStockStartDate(date: Date) {
+    this.stocks.some((item: IStock) => {
+      if(item.name === this.trackingStock.name) {
+        item.timeStamp = date;
+        return true;
       }
     });
-  }
-
-  public getStockHistory(stockName) {
-    return new Promise((resolve, reject) => {
-      try{
-        this.dbWorker.onmessage = function (e: any) {
-          resolve(e.data);
-        }
-        this.dbWorker.postMessage({ action: 'history', stockName: stockName });
-      }catch(err) {
-        reject();
-      }
-    });
-  }
-
-  public startWorker(): void {
-    this.worker = new Worker('../assets/web-workers/stocks.worker.js');
-    this.dbWorker =  new Worker('../assets/web-workers/stocks-db.worker.js');
-  }
-
-  public terminateWorker(): void {
-    if(this.worker) { this.worker.terminate(); }
-    if(this.dbWorker) { this.dbWorker.terminate(); }
   }
 
 }

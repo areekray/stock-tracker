@@ -10,7 +10,9 @@ import { AppService } from 'src/app/app.service';
   styleUrls: ['./stock-details.component.scss']
 })
 export class StockDetailsComponent implements OnInit, OnChanges {
-  @Input() stockList: IStock[] = [];
+  @Input() stock: IStock;
+  @Input() stockDataPoints: number[];
+  @Input() stockTimes: any[];
   public lineChartData: ChartDataSets[];
   public lineChartLabels: Label[];
   public lineChartOptions: (ChartOptions) = {
@@ -69,28 +71,20 @@ export class StockDetailsComponent implements OnInit, OnChanges {
   constructor(public appService: AppService) { }
 
   ngOnInit() {
-    this.appService.checkStockHistory.subscribe(data => {
-      if(!!data) {
-        this.getStockHistory();
-        this.appService.checkStockHistory.next(false);
-      }
-    })
   }
 
   ngOnChanges() {
-    this.getStockHistory();
+    //this.getStockHistory();
+    this.lineChartData = [
+      { data: this.stockDataPoints.length > 10 ? this.stockDataPoints.slice(Math.max(this.stockDataPoints.length - 10, 1)) : this.stockDataPoints, label: 'DataPoint' }
+    ];
+    this.lineChartLabels = this.stockTimes.length > 10 ? this.stockTimes.slice(Math.max(this.stockTimes.length - 10, 1)) : this.stockTimes;
   }
 
-  getStockHistory() {
-    if(!this.stockList || this.stockList.length == 0) { return; }
-    this.appService.getStockHistory(this.stockList[0].name).then((stock: any) => {
-      if(stock) {
-        this.lineChartData = [
-          { data: stock.prices.length > 10 ? stock.prices.slice(Math.max(stock.prices.length - 10, 1)) : stock.prices, label: stock.name }
-        ];
-        this.lineChartLabels = stock.timeStamps.length > 10 ? stock.timeStamps.slice(Math.max(stock.timeStamps.length - 10, 1)) : stock.timeStamps;
-      }
-    })
+  stopTracking() {
+    this.appService.trackingStock = null;
+    this.appService.resetTracking();
   }
 
+ 
 }

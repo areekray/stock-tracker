@@ -1,32 +1,30 @@
 <div id="stock-dashboard">
   <div class="nav-bar">
     <div class="logo"></div>
-    <div class="primary-text">(LIVE) Stocks App</div>
+    <div class="primary-text">Stock Tracker</div>
   </div>
-  <div class="dashboard" *ngIf="appService?.stocksList && appService?.stocksList.length > 0 && !appService?.loadUnsafeScript && !error">
+  <div class="dashboard" 
+    *ngIf="appService?.stocks && appService?.stocks.length > 0" 
+    [ngClass]="{'non-tracking': !appService?.trackingStock, 'tracking': !!appService?.trackingStock}" >
       <div>
-          <app-stocks-list [stocksList]="appService?.stocksList" (selectedStocksEvent)="refreshSelectedStocks($event)"></app-stocks-list>
+          <app-stocks-list 
+            [stocksList]="appService?.stocks" 
+            [trackingStock]="appService?.trackingStock"
+            (addStockEvent)="addStock($event)" 
+            (trackStockEvent)="trackStock($event)"></app-stocks-list>
       </div>
       <div>
-          <app-stock-details [stockList]="selectedStocks"></app-stock-details>
+          <app-stock-details 
+            [stock]="appService?.trackingStock"
+            [stockDataPoints]="appService?.stockDataPoints"
+            [stockTimes]="appService?.stockTimes"
+            ></app-stock-details>
       </div>
   </div>
-  <div class="dashboard-loading" *ngIf="!appService?.loadUnsafeScript && !error && (!appService?.stocksList || appService?.stocksList.length == 0)">
-      <div class="loader"></div>
-      <div class="primary-text">WELCOME TO LIVE STOCKS APP</div>
-      <div class="primary-text">Stocks will be loaded in moment</div>
-      <div class="secondary-text">Thanks for your patience</div>
-  </div>
-  <div class="load-unsafe-scripts" *ngIf="appService?.loadUnsafeScript">
-      <div><i class="material-icons">error_outline</i></div>
-      <div class="primary-text">WELCOME TO LIVE STOCKS APP</div>
-      <div class="primary-text">You need to enable 'Load unsafe scripts' option in your browser</div>
-      <div class="secondary-text">Click on the shield <span></span> icon in your address bar</div>
-  </div>
-  <div class="load-unsafe-scripts" *ngIf="error">
-      <div><i class="material-icons">error_outline</i></div>
-      <div class="primary-text">WELCOME TO LIVE STOCKS APP</div>
-      <div class="primary-text">Looks like the market is closed now!</div>
-      <div class="secondary-text">Please come again after some time.</div>
+  <div class="dashboard-intro" *ngIf="(!appService?.stocks || appService?.stocks.length == 0)">
+      <div class="app-logo"></div>
+      <div class="primary-text">WELCOME TO STOCK TRACKER</div>
+      <div class="primary-text">Please add new stock(s) to track them</div>
+      <div class="add-stock"><app-add-new-stock [stocks]="appService?.stocks" (addEvent)="addStock($event)"></app-add-new-stock></div>
   </div>
 </div>

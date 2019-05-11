@@ -9,7 +9,9 @@ import { timer, Subscription } from 'rxjs';
 })
 export class StocksListComponent implements OnInit, OnDestroy {
   @Input() stocksList: IStock[] = [];
-  @Output() selectedStocksEvent: EventEmitter<IStock[]> = new EventEmitter<IStock[]>();
+  @Input() trackingStock: IStock;
+  @Output() addStockEvent: EventEmitter<string> = new EventEmitter<string>();
+  @Output() trackStockEvent: EventEmitter<IStock> = new EventEmitter<IStock>();
   selectedStocks: IStock[] = [];
   counter: Subscription;
   currentTime: Date;
@@ -28,30 +30,12 @@ export class StocksListComponent implements OnInit, OnDestroy {
     if(this.counter) { this.counter.unsubscribe(); }
   }
 
-  selectStock(stock: IStock) {
-    let stockIndex = this.findIndexOf(this.selectedStocks, stock);
-    if (stockIndex >= 0) {
-      if (this.selectMultple) {
-        this.selectedStocks.splice(stockIndex, 1);
-      }
-    } else if (!this.selectMultple && this.selectedStocks.length > 0) {
-      this.selectedStocks = [];
-      this.selectedStocks.push(stock);
-    } else {
-      this.selectedStocks.push(stock);
-    }
-    this.selectedStocksEvent.emit(this.selectedStocks);
+  trackStock(stock: IStock) {
+    this.trackStockEvent.emit(stock);
   }
-  
-  findIndexOf(stocks: IStock[], stock: IStock): number {
-    let stockIndex = -1;
-    stocks.some((item: IStock, index: number) => {
-      if(item.name === stock.name) {
-        stockIndex = index;
-        return true;
-      }
-    });
-    return stockIndex;
+
+  addStock(stockName: string) {
+    this.addStockEvent.emit(stockName);
   }
 
 }

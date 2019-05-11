@@ -16,14 +16,15 @@
         & > .logo {
             height: 28px;
             width: 134px;
-            margin-left: 20px;
-            background: url('../../../../../assets/images/m-net.svg');
+            margin-left: 8px;
+            margin-bottom: 9px;
+            background: url('https://codifyd.net/wp-content/uploads/2018/08/logo-o.png');
             background-position: center;
             background-size: contain;
             background-repeat: no-repeat;
         }
         & > .primary-text {
-            margin-left: 20px;
+            margin-left: 2px;
             color: #f0f4f8;
         }
     }
@@ -39,8 +40,27 @@
             overflow-x: hidden;
             overflow-y: scroll;
         }
+        @media only screen and (max-width: 786px) {
+            & > div {
+                width: 100%;
+            }
+            &.non-tracking {
+                & > div {
+                    &:last-child {
+                        display: none;
+                    }
+                }
+            }
+            &.tracking {
+                & > div {
+                    &:first-child {
+                        display: none;
+                    }
+                }
+            }
+        }
     }  
-    .dashboard-loading, .load-unsafe-scripts {
+    .dashboard-intro {
         height: calc(100vh - 45px);
         margin-top: 45px;     
         background: #f0f4f8;
@@ -48,6 +68,21 @@
         flex-direction: column;
         justify-content: center;
         align-items: center;  
+        & > .app-logo {
+            height: 35px;
+            width: 100%;
+            background: url('https://codifyd.net/wp-content/uploads/2018/08/footer_logo-o.png');
+            background-position: center;
+            background-size: contain;
+            background-repeat: no-repeat;
+        }
+        & > .add-stock {
+            margin-top: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: nowrap;
+        }
         & > div {
             margin-bottom: 5px;
             &:first-child {
@@ -60,18 +95,6 @@
                 font-weight: 600;
                 margin-bottom: 7px;
             } 
-            &:last-child {
-                & > span {
-                    display: inline-block;
-                    height: 25px;
-                    width: 25px;    
-                    margin-bottom: -7px;
-                    background: url('../../../../../assets/images/sheild.PNG');
-                    background-position: center;
-                    background-size: contain;
-                    background-repeat: no-repeat;
-                }
-            }
         }      
     }  
 }

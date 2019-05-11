@@ -8,7 +8,10 @@ export class TimeIntervalPipe implements PipeTransform {
 
   // Object conatins all the keywords to highlight with respective color
   transform(updateTime: Date, currentTime: Date): string {
-    let returnStr: string = 'Updated ';
+    if(!updateTime) {
+      return 'Not Yet Started';
+    }
+    let returnStr: string = 'Started ';
     if(((new Date()).getTime() - updateTime.getTime())/1000 <= 5) {
         return `${returnStr} just now`;
     }

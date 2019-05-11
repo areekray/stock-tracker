@@ -1,6 +1,6 @@
 {
   "hosting": {
-    "public": "dist/live-stocks-app",
+    "public": "dist/stocks-tracker",
     "ignore": [
       "firebase.json",
       "**/.*",

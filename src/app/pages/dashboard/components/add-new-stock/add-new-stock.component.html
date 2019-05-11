@@ -1,0 +1,5 @@
+<button *ngIf="!showTextbox" type="button" (click)="showTextbox = true">Add New Stock</button>
+<div *ngIf="!!showTextbox">
+  <input type="text" [(ngModel)]="stockName" placeholder="Enter Stock Name"/>
+  <button type="button" [disabled]="checkDisabled()" (click)="add()">Add</button>
+</div>

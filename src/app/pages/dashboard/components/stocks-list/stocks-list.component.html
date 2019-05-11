@@ -1,8 +1,7 @@
 <div id="stock-list">
   <div class="card stock-card" 
   *ngFor="let stock of stocksList" 
-  [ngClass]="{'selected': findIndexOf(selectedStocks, stock) >= 0}"
-  (click)="selectStock(stock)">
+  >
     <div class="icon">
       <div><div>{{ stock?.name?.substr(0,1) | uppercase }}</div></div>
     </div>
@@ -10,7 +9,7 @@
         <div class="primary-text">{{ stock?.name | titlecase }}</div>            
         <div class="secondary-text">{{ stock?.timeStamp | timeInterval : currentTime}}</div>
     </div>
-    <div class="price">
+    <div *ngIf="trackingStock?.name === stock.name" class="price">
         <div>
           <div class="primary-text">{{ stock?.price | currency:'INR':'symbol':'0.2-2' }}</div>
           <div class="secondary-text" 
@@ -25,5 +24,7 @@
           </i>
         </div>
     </div>
+    <div *ngIf="trackingStock?.name != stock.name"><button type="button" (click)="trackStock(stock)">Track</button></div>
   </div>
+  <div class="add-stock"><app-add-new-stock [stocks]="stocksList" (addEvent)="addStock($event)"></app-add-new-stock></div>
 </div>

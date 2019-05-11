@@ -1,15 +1,30 @@
 <div id="stock-details">
-  <div class="no-data" *ngIf="stockList?.length === 0">
+  <div class="no-data" *ngIf="!stock">
       <div><i class="material-icons">content_paste</i></div>
       <div class="primary-text">STOCK DATA HISTORY</div>
       <div class="primary-text">You can visualize change in price over the time</div>
       <div class="secondary-text">Select on stock card to view its history</div>
   </div>
-  <div *ngIf="stockList?.length > 0">
+  <div *ngIf="stock">
       <div class="card graph-card" >
-          <div class="primary-text">{{ stockList[0].name | titlecase }}</div>
-          <div class="secondary-text">Stock Name</div>
-          <div style="display: block;" *ngIf="lineChartLabels">
+            <div class="primary-text">{{ stock?.name | titlecase }}</div>
+            <div class="secondary-text">Stock Name</div>
+            <div class="price">
+                <div>
+                <div class="primary-text">{{ stock?.price | currency:'INR':'symbol':'0.2-2' }}</div>
+                <div class="secondary-text" 
+                    [ngClass]="{'up': stock?.difference > 0, 'down': stock?.difference < 0}">
+                    {{ stock?.difference == 0 ? 'Consistent' : stock?.difference | currency:'INR':'symbol':'0.2-2' }}
+                </div>
+                </div>
+                <div>
+                <i class="material-icons"
+                    [ngClass]="{'up': stock?.difference > 0, 'down': stock?.difference < 0}">
+                    {{ stock?.difference > 0 ? 'arrow_upward' : stock?.difference < 0 ? 'arrow_downward' : '' }}
+                </i>
+                </div>
+            </div>
+          <div class="chart" *ngIf="lineChartLabels">
               <canvas baseChart
                           [datasets]="lineChartData"
                           [labels]="lineChartLabels"
@@ -17,6 +32,10 @@
                           [colors]="lineChartColors"
                           [chartType]="lineChartType"></canvas>
               </div>
+            <div class="stop-tracking">
+                <button type="button" (click)="stopTracking()">Stop Tracking</button>
+            </div>
       </div>
+      
   </div>
 </div>

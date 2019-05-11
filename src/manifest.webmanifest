@@ -1,7 +1,7 @@
 {
-  "name": "(LIVE) Stocks App",
-  "short_name": "(LIVE) Stocks App",
-  "theme_color": "#1976d2",
+  "name": "Stock Tracker",
+  "short_name": "Stock Tracker",
+  "theme_color": "#56677b",
   "background_color": "#fafafa",
   "display": "standalone",
   "scope": "/",
